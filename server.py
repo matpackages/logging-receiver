@@ -104,7 +104,7 @@ def main():
                 }
             },
             "console": {
-                "format": "%(asctime)s [%(levelname)s]: %(message)s",
+                "format": "%(asctime)s [%(levelname)s] %(message)s",
                 "datefmt": "%Y-%m-%dT%H:%M:%S%z"
             },
         },
