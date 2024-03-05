@@ -1,4 +1,5 @@
 """Logging receiver server."""
+import json
 import logging
 import logging.handlers
 import logging.config
@@ -83,53 +84,15 @@ class LogRecordSocketReceiver(socketserver.ThreadingTCPServer):
             abort = self.abort
 
 
+def load_config():
+    """Load JSON config."""
+    with open("config.json", "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
 def main():
     """Main function."""
-    logging_config = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "filters": {},
-        "formatters": {
-            "json": {
-                "()": "json_formatter.JsonFormatter",
-                "fmt_keys": {
-                    "level": "levelname",
-                    "message": "message",
-                    "time": "time",
-                    "logger": "name",
-                    "module": "module",
-                    "function": "funcName",
-                    "line": "lineno",
-                    "thread_name": "threadName"
-                }
-            },
-            "console": {
-                "format": "%(asctime)s [%(levelname)s] %(message)s",
-                "datefmt": "%Y-%m-%dT%H:%M:%S%z"
-            },
-        },
-        "handlers": {
-            "file": {
-                "class": "logging.handlers.RotatingFileHandler",
-                "level": "DEBUG",
-                "formatter": "json",
-                "filename": "logs/log.jsonl",
-                "maxBytes": 10000,
-                "backupCount": 3
-            },
-            "stderr": {
-                "class": "logging.StreamHandler",
-                "level": "DEBUG",
-                "stream": "ext://sys.stderr",
-                "formatter": "console",
-            },
-        },
-        "loggers": {
-            "root": {"level": "DEBUG", "handlers": ["file", "stderr"]}
-        }
-    }
-
-    logging.config.dictConfig(config=logging_config)
+    logging.config.dictConfig(config=load_config())
 
     tcpserver = LogRecordSocketReceiver(port=9000)
     print('Starting TCP server.')

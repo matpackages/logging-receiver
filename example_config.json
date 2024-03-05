@@ -1,0 +1,43 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "filters": {},
+    "formatters": {
+        "json": {
+            "()": "json_formatter.JsonFormatter",
+            "fmt_keys": {
+                "level": "levelname",
+                "message": "message",
+                "time": "time",
+                "logger": "name",
+                "module": "module",
+                "function": "funcName",
+                "line": "lineno",
+                "thread_name": "threadName"
+            }
+        },
+        "console": {
+            "format": "%(asctime)s [%(levelname)s] %(message)s",
+            "datefmt": "%Y-%m-%dT%H:%M:%S%z"
+        }
+    },
+    "handlers": {
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "json",
+            "filename": "logs/log.jsonl",
+            "maxBytes": 10000,
+            "backupCount": 3
+        },
+        "stderr": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "stream": "ext://sys.stderr",
+            "formatter": "console"
+        }
+    },
+    "loggers": {
+        "root": {"level": "DEBUG", "handlers": ["file", "stderr"]}
+    }
+}
