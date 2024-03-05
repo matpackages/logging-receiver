@@ -1,11 +1,11 @@
 """Logging receiver server."""
-import pickle
 import logging
 import logging.handlers
 import logging.config
+import pickle
+import select
 import socketserver
 import struct
-import select
 
 
 class LogRecordStreamHandler(socketserver.StreamRequestHandler):
