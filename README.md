@@ -21,8 +21,23 @@ cd logging-receiver
 Copy example configuration and adjust `config.json` according to your needs:
 
 ```
-cd example_config.json config.json
+cp example_config.json config.json
 ```
+
+Build image and start server:
+
+```
+docker build . -t logging-receiver
+docker run -v logs:/app/logs -v config.json:/app/config.json:ro -p 9500:9000 logging-receiver
+```
+
+Create some example logs using example client:
+
+```
+python3 client.py localhost 9500
+```
+
+The folder `logs` should get populated with log files.
 
 ## References
 
