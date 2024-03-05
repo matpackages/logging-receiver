@@ -24,20 +24,26 @@ Copy example configuration and adjust `config.json` according to your needs:
 cp example_config.json config.json
 ```
 
+Make `logs` directory:
+
+```
+mkdir -p logs
+```
+
 Build image and start server:
 
 ```
 docker build . -t logging-receiver
-docker run -v logs:/app/logs -v config.json:/app/config.json:ro -p 9500:9000 logging-receiver
+docker run --rm -v $PWD/logs:/app/logs -v $PWD/config.json:/app/config.json:ro -p 9000:9000 -it logging-receiver
 ```
 
 Create some example logs using example client:
 
 ```
-python3 client.py localhost 9500
+python3 client.py localhost 9000
 ```
 
-The folder `logs` should get populated with log files.
+The `logs` directory should get populated with log files.
 
 ## References
 
