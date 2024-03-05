@@ -46,7 +46,7 @@ class JsonFormatter(logging.Formatter):
     def _prepare_log_dict(self, record: logging.LogRecord) -> dict[str, Any]:
         always_fields = {
             "message": record.getMessage(),
-            "times": dt.datetime.fromtimestamp(
+            "time": dt.datetime.fromtimestamp(
                 record.created, tz=dt.timezone.utc).isoformat()
         }
         if record.exc_info is not None:

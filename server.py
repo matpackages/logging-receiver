@@ -95,14 +95,18 @@ def main():
                 "fmt_keys": {
                     "level": "levelname",
                     "message": "message",
-                    "timestamp": "timestamp",
+                    "time": "time",
                     "logger": "name",
                     "module": "module",
                     "function": "funcName",
                     "line": "lineno",
                     "thread_name": "threadName"
                 }
-            }
+            },
+            "console": {
+                "format": "%(asctime)s [%(levelname)s]: %(message)s",
+                "datefmt": "%Y-%m-%dT%H:%M:%S%z"
+            },
         },
         "handlers": {
             "file": {
@@ -113,15 +117,21 @@ def main():
                 "maxBytes": 10000,
                 "backupCount": 3
             },
+            "stderr": {
+                "class": "logging.StreamHandler",
+                "level": "DEBUG",
+                "stream": "ext://sys.stderr",
+                "formatter": "console",
+            },
         },
         "loggers": {
-            "root": {"level": "DEBUG", "handlers": ["file"]}
+            "root": {"level": "DEBUG", "handlers": ["file", "stderr"]}
         }
     }
 
     logging.config.dictConfig(config=logging_config)
 
-    tcpserver = LogRecordSocketReceiver(port=9456)
+    tcpserver = LogRecordSocketReceiver(port=9000)
     print('Starting TCP server.')
     tcpserver.serve_until_stopped()
 
