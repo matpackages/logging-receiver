@@ -1,9 +1,11 @@
+"""Logging receiver server."""
 import pickle
 import logging
 import logging.handlers
 import logging.config
 import socketserver
 import struct
+import select
 
 
 class LogRecordStreamHandler(socketserver.StreamRequestHandler):
@@ -32,9 +34,11 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
             self.handleLogRecord(record)
 
     def unPickle(self, data):
+        """Decode log record in pickle format."""
         return pickle.loads(data)
 
     def handleLogRecord(self, record):
+        """Handle log record."""
         # if a name is specified, we use the named logger rather than the one
         # implied by the record.
         if self.server.logname is not None:
@@ -65,18 +69,22 @@ class LogRecordSocketReceiver(socketserver.ThreadingTCPServer):
         self.logname = None
 
     def serve_until_stopped(self):
-        import select
+        """Start server."""
         abort = 0
         while not abort:
-            rd, wr, ex = select.select([self.socket.fileno()],
-                                       [], [],
-                                       self.timeout)
+            rd, _, _ = select.select(
+                [self.socket.fileno()],
+                [],
+                [],
+                self.timeout
+            )
             if rd:
                 self.handle_request()
             abort = self.abort
 
 
 def main():
+    """Main function."""
     logging_config = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -114,7 +122,7 @@ def main():
     logging.config.dictConfig(config=logging_config)
 
     tcpserver = LogRecordSocketReceiver(port=9456)
-    print('About to start TCP server...')
+    print('Starting TCP server.')
     tcpserver.serve_until_stopped()
 
 
