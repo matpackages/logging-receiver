@@ -1,3 +1,5 @@
+"""Custom logging formatters."""
+
 import logging
 import json
 from typing import Any

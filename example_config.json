@@ -4,7 +4,7 @@
     "filters": {},
     "formatters": {
         "json": {
-            "()": "json_formatter.JsonFormatter",
+            "()": "formatters.JsonFormatter",
             "fmt_keys": {
                 "level": "levelname",
                 "message": "message",
@@ -23,7 +23,7 @@
     },
     "handlers": {
         "file": {
-            "class": "server.CompressedRotatingFileHandler",
+            "class": "handlers.CompressedRotatingFileHandler",
             "level": "DEBUG",
             "formatter": "json",
             "filename": "logs/log.jsonl",

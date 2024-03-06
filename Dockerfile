@@ -4,5 +4,6 @@ VOLUME [ "/app/logs" ]
 VOLUME [ "/app/config.json" ]
 EXPOSE 9000
 COPY server.py .
-COPY json_formatter.py .
+COPY formatters.py .
+COPY handlers.py .
 CMD [ "python" , "server.py"]
