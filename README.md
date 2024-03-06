@@ -10,7 +10,7 @@ Server able to receive Python [logging](https://docs.python.org/3/library/loggin
 * available as Docker container
 * other services (such as [Elastic Stack](https://www.elastic.co/de/elastic-stack)) could pick up log files from this service
 
-## Usage
+## Install
 
 Clone repository:
 
@@ -30,6 +30,8 @@ Make `logs` directory:
 ```
 mkdir -p logs
 ```
+
+## Usage
 
 Build image and start server:
 
