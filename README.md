@@ -6,6 +6,7 @@ Server able to receive Python [logging](https://docs.python.org/3/library/loggin
 * central point to collect logs
 * saves records to file in [JSON Lines](https://jsonlines.org/) format
 * can rotate log files
+* can compress log files on rotation and use timestamp in file name
 * available as Docker container
 * other services (such as [Elastic Stack](https://www.elastic.co/de/elastic-stack)) could pick up log files from this service
 
