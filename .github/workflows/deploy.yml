@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://matlabpackages.com
+    steps:
+      - name: Setup SSH
+        uses: benoitchantre/setup-ssh-authentication-action@1.0.1
+        with:
+          private-key-name: id_ed25519
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+      - name: Deploy Logging Receiver
+        run: ssh user@matlabpackages.com "bash logging-receiver/deploy.sh"
+      - name: Cleanup
+        run: rm -rf ~/.ssh
