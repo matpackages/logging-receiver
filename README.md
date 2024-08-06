@@ -15,7 +15,7 @@ Server able to receive Python [logging](https://docs.python.org/3/library/loggin
 Clone repository:
 
 ```
-git clone https://github.com/matlabpackages/logging-receiver.git
+git clone https://github.com/matpackages/logging-receiver.git
 cd logging-receiver
 ```
 

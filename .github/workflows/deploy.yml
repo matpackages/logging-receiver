@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://matlabpackages.com
+      url: https://matpackages.com
     steps:
       - name: Setup SSH
         uses: benoitchantre/setup-ssh-authentication-action@1.0.1
@@ -21,6 +21,6 @@ jobs:
           private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
       - name: Deploy Logging Receiver
-        run: ssh user@matlabpackages.com "bash logging-receiver/deploy.sh"
+        run: ssh user@matpackages.com "bash logging-receiver/deploy.sh"
       - name: Cleanup
         run: rm -rf ~/.ssh
